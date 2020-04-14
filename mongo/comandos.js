@@ -156,7 +156,32 @@ db.users.find(
     {nombre: true, email: true, sexo:true}
 ).pretty()
 
-// Actualizar documento
+// Actualizar documento con save
 var usuario = db.users.findOne({nombre: 'Guillermo'})
 usuario.sexo = 'M'
 db.users.save(usuario)
+
+// updateOne y updateMany
+db.users.updateOne(
+    { // WHERE
+        nombre: 'Guillermo'
+    },
+    { // SET
+        $set: {
+            direccion: 'Calle 145C # 82-41'
+        }
+    }
+)
+// Actualizará todos los documentos que no tengan el campo dirección
+db.users.updateMany(
+    { // WHERE
+        direccion: { // Campo a actualizar en todos los documentos
+            $exists: false
+        }
+    },
+    { // SET
+        $set: {
+            direccion: 'Por definir'
+        }
+    }
+)
