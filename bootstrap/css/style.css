@@ -1,0 +1,9 @@
+:root {
+    --bkg-gray-nav: #3b3a3a;
+    --orange-lighter: #f59678;
+    --bkg-beige-color: #ffa50040;
+}
+
+#bg-nav {
+    background-color: var(--bkg-gray-nav);
+}
