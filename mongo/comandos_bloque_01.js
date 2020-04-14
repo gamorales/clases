@@ -18,7 +18,7 @@ var user2 = {
     edad: 29,
     email: "info2@info.com"
 }
-db.users.insertOne(user)
+db.users.insertOne(user2)
 
 // Insert Many
 var usersList = [
@@ -33,10 +33,22 @@ var usersList = [
         email: "info4@info.com"
     }
 ]
+db.users.insertMany(usersList)
 
 // Listar registros
 db.users.find()
+        [.skip(INT)]  // Desde qué registro quiero comenzar (OFFSET)
+        [.limit(INT)] // Limita la cantidad de registros a retornar
+        [.count()]    // Retorna la cantidad de registros de la búsqueda
 
+db.users.find(
+    {},
+    {nombre: true, email: true}
+).sort( // Organiza por campo nombre
+    {
+        nombre: 1 // Ascendente, -1 Descendente
+    }
+)
 db.users.find(
     {edad: 37}, // WHERE
     {nombre: true, email: true} // SELECT
@@ -161,7 +173,7 @@ var usuario = db.users.findOne({nombre: 'Guillermo'})
 usuario.sexo = 'M'
 db.users.save(usuario)
 
-// updateOne y updateMany
+// updateOne, updateMany, upsert y findAndModify
 db.users.updateOne(
     { // WHERE
         nombre: 'Guillermo'
@@ -185,3 +197,72 @@ db.users.updateMany(
         }
     }
 )
+// Eliminar un campo del documento
+db.users.updateOne(
+    {
+        edad: {$exists: true}
+    },
+    {
+        $unset: {edad: true}
+    }
+)
+// upsert, crea un documento sino existe
+db.users.updateOne(
+    { // WHERE
+        nombre: 'Steven Wozniak'
+    },
+    { // SET
+        $set: {
+            direccion: 'Some place in USA'
+        }
+    },
+    {
+        upsert: true
+    }
+)
+// Como ya existe, lo modifica
+db.users.updateOne(
+    { // WHERE
+        nombre: 'Steven Wozniak'
+    },
+    { // SET
+        $set: {
+            edad: 56
+        }
+    },
+    {
+        upsert: true
+    }
+)
+// Buscar y modificar
+db.users.findAndModify(
+    {
+        query: {
+            nombre: /^Diana/
+        },
+        update: {
+            sexo: 'F'
+        }
+    }
+)
+
+// Renombrar campos
+db.users.updateMany(
+    {}, // Todos
+    {
+        $rename: {
+            email: 'correo'
+        }
+    }
+)
+
+// Eliminar documentos
+db.users.remove(
+    { // WHERE
+        nombre: 'Ada Lovelace'
+    }
+)
+db.users.remove({}) // Elimina todo
+// Eliminar colección y base de datos
+db.<collection>.drop() // Elimina la colección
+db.dropDatabase() // Elimina la base de datos
