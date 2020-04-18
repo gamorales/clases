@@ -7,3 +7,48 @@
 #bg-nav {
     background-color: var(--bkg-gray-nav);
 }
+
+/* Carousel */
+#main-carousel .carousel-item {
+    height: 240px;
+}
+#main-carousel .carousel-caption > h5 {
+    font-size: 2rem;
+}
+#main-carousel .carousel-caption > p {
+    font-size: 1.25rem;
+}
+
+/* Options */
+.options-sect {
+    background-color: var(--bkg-gray-nav);
+    padding-left: 12px;
+    padding-right: 12px;
+}
+.options-area {
+    height: inherit;
+    padding: 20px 0;
+}
+.options-area .opt {
+    text-align: center;
+    color: #fff;
+    flex-grow: 1;
+    flex-basis: 0;
+    min-width: 300px;
+}
+.options-area .opt .opt-img {
+    widows: 120px;
+    height: 120px;
+    border-radius: 50%;
+}
+.options-area .opt .opt-title {
+    font-size: 28px;
+    font-weight: 700;
+}
+.options-area .opt .opt-desc {
+    margin-top: 12px;
+    margin-bottom: 0;
+}
+.options-area .opt.mg-top {
+    margin-top: 40px;
+}
